@@ -1,8 +1,8 @@
-export type StatusBarStyle = 'light-content' | 'dark-content'
+type StatusBarStyle = 'light-content' | 'dark-content'
 
-export type Gradient = [string, string]
+type Gradient = [string, string]
 
-export interface Gradients {
+interface Gradients {
   background: Gradient
   surface: Gradient
   primary: Gradient
@@ -13,7 +13,7 @@ export interface Gradients {
   empty: Gradient
 }
 
-export interface Backgrounds {
+interface Backgrounds {
   input: string
   editInput: string
 }
@@ -32,4 +32,10 @@ export interface ColorScheme {
   gradients: Gradients
   backgrounds: Backgrounds
   statusBarStyle: StatusBarStyle
+}
+
+export interface ThemeContextType {
+  isDarkMode: boolean
+  toggleDarkMode: () => void
+  colors: ColorScheme
 }

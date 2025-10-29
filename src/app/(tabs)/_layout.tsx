@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
+import useTheme from '@hooks/useTheme'
 import {
   Icon,
   Label,
@@ -8,12 +9,14 @@ import {
 import { Platform } from 'react-native'
 
 export default function TabsLayout() {
+  const { colors } = useTheme()
+
   return (
     <NativeTabs
-      iconColor='green'
-      tintColor='red'
-      labelStyle={{ color: 'green' }}
-      backgroundColor='#1e293b'
+      iconColor={colors.textMuted}
+      tintColor={colors.primary}
+      labelStyle={{ color: colors.textMuted }}
+      backgroundColor={colors.surface}
       disableIndicator={true}
     >
       <NativeTabs.Trigger name='index'>
