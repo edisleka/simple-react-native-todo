@@ -9,7 +9,13 @@ import { Platform } from 'react-native'
 
 export default function TabsLayout() {
   return (
-    <NativeTabs>
+    <NativeTabs
+      iconColor='green'
+      tintColor='red'
+      labelStyle={{ color: 'green' }}
+      backgroundColor='#1e293b'
+      disableIndicator={true}
+    >
       <NativeTabs.Trigger name='index'>
         <Label>Home</Label>
         {Platform.select({
@@ -32,12 +38,7 @@ export default function TabsLayout() {
           ),
           android: (
             <Icon
-              src={{
-                default: (
-                  <VectorIcon family={Ionicons} name='settings-outline' />
-                ),
-                selected: <VectorIcon family={Ionicons} name='settings' />,
-              }}
+              src={<VectorIcon family={Ionicons} name='settings-outline' />}
             />
           ),
         })}
