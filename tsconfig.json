@@ -21,7 +21,8 @@
       "@screens/*": ["./src/screens/*"],
       "@services/*": ["./src/services/*"],
       "@constants/*": ["./src/constants/*"],
-      "@fonts/*": ["./assets/fonts/*"]
+      "@fonts/*": ["./assets/fonts/*"],
+      "@contexts/*": ["./src/contexts/*"]
     }
   },
   "include": [
