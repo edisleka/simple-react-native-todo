@@ -5,7 +5,7 @@ export default function HomeScreen() {
   const { toggleDarkMode } = useTheme()
 
   return (
-    <View className='flex-1 items-center justify-center'>
+    <View className='flex-1 items-center justify-center bg-white dark:bg-[#121212]'>
       <Text className='text-2xl font-bold'>Home Screen</Text>
       <Pressable
         onPress={() => toggleDarkMode()}

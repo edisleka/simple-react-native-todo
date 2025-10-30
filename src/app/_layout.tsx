@@ -1,6 +1,11 @@
 import { ThemeProvider } from '@providers/useThemeProvider'
 import '@root/global.css'
+import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import { Stack } from 'expo-router'
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+})
 
 const InitialLayout = () => {
   return (
@@ -12,8 +17,10 @@ const InitialLayout = () => {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <InitialLayout />
-    </ThemeProvider>
+    <ConvexProvider client={convex}>
+      <ThemeProvider>
+        <InitialLayout />
+      </ThemeProvider>
+    </ConvexProvider>
   )
 }

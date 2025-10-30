@@ -1,4 +1,4 @@
-import { ColorScheme } from '@types/colorScheme.types'
+import { ColorScheme } from '@/types/colorScheme.types'
 
 export const lightColors: ColorScheme = {
   bg: '#f8fafc',

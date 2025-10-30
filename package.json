@@ -17,6 +17,7 @@
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
+    "convex": "^1.28.0",
     "expo": "~54.0.20",
     "expo-constants": "~18.0.10",
     "expo-dev-client": "~6.0.16",
@@ -45,6 +46,7 @@
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.9.2"
