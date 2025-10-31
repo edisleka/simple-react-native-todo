@@ -1,4 +1,5 @@
-import Header from '@/components/Header'
+import Header from '@components/Header'
+import TodoInput from '@components/TodoInput'
 import useTheme from '@hooks/useTheme'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StatusBar } from 'expo-status-bar'
@@ -19,6 +20,7 @@ export default function HomeScreen() {
       <StatusBar style={colors.statusBarStyle} />
       <SafeAreaView style={homeStyles.safeArea}>
         <Header />
+        <TodoInput />
         <Pressable onPress={() => toggleDarkMode()}>
           <Text>Toggle Dark Mode</Text>
         </Pressable>
