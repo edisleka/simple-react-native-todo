@@ -1,4 +1,4 @@
-type StatusBarStyle = 'light-content' | 'dark-content'
+type StatusBarStyle = 'light' | 'dark'
 
 type Gradient = [string, string]
 
