@@ -5,15 +5,15 @@ import LoadingSpinner from '@components/LoadingSpinner'
 import TodoInput from '@components/TodoInput'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import useTheme from '@hooks/useTheme'
+import { LegendList } from '@legendapp/list'
 import { api } from '@root/convex/_generated/api'
 import { useQuery } from 'convex/react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StatusBar } from 'expo-status-bar'
-import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTodoActions } from '../../hooks/useTodoActions'
 import { createHomeStyles } from './home.styles'
-
 export default function HomeScreen() {
   const { colors } = useTheme()
 
@@ -161,7 +161,7 @@ export default function HomeScreen() {
         <Header />
         <TodoInput />
 
-        <FlatList
+        {/* <FlatList
           data={todos}
           renderItem={renderTodoItem}
           keyExtractor={(item) => item._id.toString()}
@@ -169,6 +169,16 @@ export default function HomeScreen() {
           contentContainerStyle={homeStyles.todoListContent}
           ListEmptyComponent={<EmptyState />}
           showsVerticalScrollIndicator={false}
+        /> */}
+        <LegendList
+          data={todos}
+          renderItem={renderTodoItem}
+          keyExtractor={(item) => item._id.toString()}
+          style={homeStyles.todoList}
+          contentContainerStyle={homeStyles.todoListContent}
+          ListEmptyComponent={<EmptyState />}
+          showsVerticalScrollIndicator={false}
+          recycleItems
         />
       </SafeAreaView>
     </LinearGradient>
