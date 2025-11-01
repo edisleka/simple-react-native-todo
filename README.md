@@ -14,25 +14,35 @@ A modern, cross-platform todo application built with Expo and React Native. Mana
 - 📱 **Cross-Platform**: Works on iOS, Android, and Web
 - 🌙 **Dark Mode**: Automatic theme switching with manual toggle
 - ⚡ **Real-Time Sync**: Instant updates across devices using Convex
-- 🎨 **Modern UI**: Beautiful interface built with NativeWind (Tailwind CSS)
+- 🎨 **Modern UI & Gradients**: Polished interface with `expo-linear-gradient` and a modern zinc/violet palette
+- 🧭 **File-based Routing**: Powered by Expo Router
+- 🧰 **Reusable Hooks**: `useTodoActions` centralizes editing state and mutations
+- 🧮 **Progress Stats**: Visual summary of total, completed, and active todos
+- 🧨 **Danger Zone**: One-tap reset to clear all todos (with confirmation)
+- 📜 **Preferences**: Dark mode toggle, notifications and auto-sync switches
+- 🧠 **High-Performance List**: Uses `@legendapp/list` for virtualization and recycled items
 - 🔄 **Full CRUD**: Create, read, update, delete, and toggle todos
-- 📊 **Organized Structure**: Clean codebase with separated styles and components
+- 🧱 **Organized Structure**: Clean codebase with separated styles and components
 - 🚀 **Type-Safe**: Full TypeScript support for better development experience
 
 ## 🛠️ Tech Stack
 
 ### Core Technologies
+
 - **[Expo](https://expo.dev/)** (~54.0.20) - React Native framework
 - **[React Native](https://reactnative.dev/)** (0.81.5) - Mobile framework
 - **[TypeScript](https://www.typescriptlang.org/)** (5.9.2) - Type safety
 - **[Convex](https://www.convex.dev/)** (^1.28.0) - Backend-as-a-Service
 
 ### UI & Styling
+
 - **[NativeWind](https://www.nativewind.dev/)** (^4.2.1) - Tailwind CSS for React Native
 - **[Expo Router](https://docs.expo.dev/router/introduction/)** (~6.0.13) - File-based routing
 - **[React Navigation](https://reactnavigation.org/)** - Navigation library
+- **[@legendapp/list](https://legendapp.com/open-source/list/)** (^2.x) - Ultra-fast list with recycling
 
 ### Development Tools
+
 - ESLint - Code linting
 - Prettier - Code formatting
 - React Compiler - Performance optimization
@@ -83,13 +93,13 @@ This will start the Expo development server. You'll see a QR code and options to
 
 ## 📱 Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm start` | Start the Expo development server |
-| `npm run android` | Run on Android emulator/device |
-| `npm run ios` | Run on iOS simulator/device |
-| `npm run web` | Run in web browser |
-| `npm run lint` | Run ESLint to check code quality |
+| Script             | Description                            |
+| ------------------ | -------------------------------------- |
+| `npm start`        | Start the Expo development server      |
+| `npm run android`  | Run on Android emulator/device         |
+| `npm run ios`      | Run on iOS simulator/device            |
+| `npm run web`      | Run in web browser                     |
+| `npm run lint`     | Run ESLint to check code quality       |
 | `npm run prebuild` | Generate native projects (iOS/Android) |
 
 ## 📁 Project Structure
@@ -109,7 +119,8 @@ simple-todo/
 │   │       └── settings.styles.ts
 │   ├── components/         # Reusable components
 │   ├── hooks/              # Custom React hooks
-│   │   └── useTheme.tsx    # Theme management hook
+│   │   ├── useTheme.tsx    # Theme management hook
+│   │   └── useTodoActions.ts # Todo handlers & editing state
 │   ├── providers/          # Context providers
 │   ├── contexts/           # React contexts
 │   │   └── themeContext.ts # Theme context
@@ -129,8 +140,47 @@ The app includes a comprehensive theming system with:
 
 - **Automatic Theme Detection**: Follows system preferences
 - **Manual Toggle**: Switch between light and dark modes
-- **Custom Color Scheme**: Defined in `src/types/colorScheme.types.ts`
+- **Custom Color Scheme**: Modern zinc surfaces and violet primary in `src/constants/Colors.ts`, types in `src/types/colorScheme.types.ts`
 - **Context-Based**: Theme state managed via React Context
+
+Gradients are consistently used across surfaces, controls, and status visuals for a refined, depthful look.
+
+## ⚡ High‑Performance Lists with LegendList
+
+`@legendapp/list` is used as a drop‑in, high‑performance replacement for `FlatList`. It supports item recycling and smooth scrolling with large datasets.
+
+Install (already included in this project):
+
+```bash
+npm i @legendapp/list
+```
+
+Import:
+
+```8:8:src/screens/home/home.tsx
+import { LegendList } from '@legendapp/list'
+```
+
+Usage (replaces `FlatList` 1:1, with optional `recycleItems`):
+
+```173:182:src/screens/home/home.tsx
+        <LegendList
+          data={todos}
+          renderItem={renderTodoItem}
+          keyExtractor={(item) => item._id.toString()}
+          style={homeStyles.todoList}
+          contentContainerStyle={homeStyles.todoListContent}
+          ListEmptyComponent={<EmptyState />}
+          showsVerticalScrollIndicator={false}
+          recycleItems
+        />
+```
+
+Benefits:
+
+- **Virtualization & Recycling**: Lower memory usage and better performance
+- **API Parity**: Nearly identical props to `FlatList` for easy migration
+- **Smooth Scrolling**: Great UX even with long lists
 
 ## 🔧 Configuration
 
@@ -169,6 +219,7 @@ The Convex schema defines a simple todo structure:
 ```
 
 Available operations:
+
 - `getTodos` - Query all todos
 - `addTodo` - Create a new todo
 - `toggleTodo` - Mark todo as complete/incomplete
