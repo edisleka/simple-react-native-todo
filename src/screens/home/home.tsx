@@ -1,4 +1,4 @@
-import { Todo, TodoId } from '@/types/todo.type'
+import { Todo } from '@/types/todo.type'
 import EmptyState from '@components/EmptyState'
 import Header from '@components/Header'
 import LoadingSpinner from '@components/LoadingSpinner'
@@ -6,82 +6,34 @@ import TodoInput from '@components/TodoInput'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import useTheme from '@hooks/useTheme'
 import { api } from '@root/convex/_generated/api'
-import { useMutation, useQuery } from 'convex/react'
+import { useQuery } from 'convex/react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StatusBar } from 'expo-status-bar'
-import { useState } from 'react'
-import {
-  Alert,
-  FlatList,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTodoActions } from '../../hooks/useTodoActions'
 import { createHomeStyles } from './home.styles'
 
 export default function HomeScreen() {
   const { colors } = useTheme()
 
-  const [editingId, setEditingId] = useState<TodoId | null>(null)
-  const [editedText, setEditedText] = useState('')
-
   const homeStyles = createHomeStyles(colors)
+  const {
+    editingId,
+    editedText,
+    setEditedText,
+    handleToggleTodo,
+    handleDeleteTodo,
+    handleEditTodo,
+    handleSaveEdit,
+    handleCancelEdit,
+  } = useTodoActions()
 
   const todos = useQuery(api.todos.getTodos)
-  const toggleTodo = useMutation(api.todos.toggleTodo)
-  const deleteTodo = useMutation(api.todos.deleteTodo)
-  const updateTodo = useMutation(api.todos.updateTodo)
 
   const isLoading = todos === undefined
 
   if (isLoading) return <LoadingSpinner />
-
-  const handleToggleTodo = async (id: TodoId) => {
-    try {
-      await toggleTodo({ id })
-    } catch (error) {
-      console.error('Error toggling todo:', error)
-      Alert.alert('Error', 'Failed to toggle todo')
-    }
-  }
-
-  const handleDeleteTodo = async (id: TodoId) => {
-    Alert.alert('Delete Todo', 'Are you sure you want to delete this todo?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        onPress: async () => deleteTodo({ id }),
-      },
-    ])
-  }
-
-  const handleEditTodo = (todo: Todo) => {
-    setEditedText(todo.text)
-    setEditingId(todo._id)
-  }
-
-  const handleSaveEdit = async () => {
-    if (editingId) {
-      try {
-        await updateTodo({ id: editingId, text: editedText.trim() })
-        setEditingId(null)
-        setEditedText('')
-      } catch (error) {
-        console.error('Error updating todo:', error)
-        Alert.alert('Error', 'Failed to update todo')
-      }
-    }
-  }
-
-  const handleCancelEdit = () => {
-    setEditingId(null)
-    setEditedText('')
-  }
 
   const renderTodoItem = ({ item }: { item: Todo }) => {
     const isEditing = editingId === item._id
